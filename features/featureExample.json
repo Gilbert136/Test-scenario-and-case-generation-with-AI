@@ -1,0 +1,46 @@
+{"Result": "Feature: Money Transactions for Adults and Non-Adults\n  Background:\n    Given a user is an adult\n\n  @withdraw\n  Scenario Outline: Adult user can withdraw money\n    Given the user is an adult\n    When the user withdraws <amount> euros\n    Then the withdrawal is successful\n\n    @test @dev\n    Examples:\n      | amount |\n      | 50     |\n      | 100    |\n\n@send\nScenario Outline: Adult user can send money\n    Given the user is an adult\n    When the user sends <amount> euros\n    Then the money transfer is successful\n\n    @test @dev\n    Examples:\n      | amount |\n      | 30     |\n      | 50     |\n\n@block\nScenario Outline: Non-adult user sending over 20 euros is blocked\n    Given the user is not an adult\n    When the user tries to send <amount> euros\n    Then the transaction is blocked\n\n    @test @dev\n    Examples:\n      | amount |\n      | 25     |\n      | 30     |\n"
+
+}
+Feature: Money Transactions for Adults and Non-Adults
+
+Background:
+    Given a user is an adult
+
+@withdraw
+Scenario Outline: Adult user can withdraw money
+    Given the user is an adult
+    When the user withdraws <amount> euros
+    Then the withdrawal is successful
+
+    @withdrawal
+    @test @dev
+    Examples:
+      | amount |
+      | 50     |
+      | 100    |
+
+@send
+Scenario Outline: Adult user can send money
+    Given the user is an adult
+    When the user sends <amount> euros
+    Then the money transfer is successful
+
+    @money-transfer
+    @test @dev
+    Examples:
+      | amount |
+      | 30     |
+      | 50     |
+
+@block
+Scenario Outline: Non-adult user sending over 20 euros is blocked
+    Given the user is not an adult
+    When the user tries to send <amount> euros
+    Then the transaction is blocked
+
+    @block-non-adult
+    @test @dev
+    Examples:
+      | amount |
+      | 25     |
+      | 30     |

@@ -1,0 +1,290 @@
+{
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a Quality Analyst"
+        },
+        {
+            "role": "user",
+            "content": "I want to sending and withdrawing money by adults and non-adults. Write at least 3 test scenario. 
+            Using BDD style. Use the following {instruction} and {criteria}.  
+            {instruction}=1. Always start BDD style with 'Feature:' keyword. 2. Use 'Scenario Outline:' instead of 'Scenario:'. 3. Include steps in the Background if they are repeated at the beginning of all Scenario Outline in a Feature. 4. Background step should come before every Scenario Outline. 5. Tags are written with '@{descriptive-test}' {descriptive-test}=summary of the individual Feature or Scenario Outline. 6. Put tags at the line on top of only Feature and Scenario Outline and not Examples to annotate it. 7.  Include Examples for each Scenario Outline. 8.  Use '@test @dev' to annotate Examples. 
+            {criteria}=User should be an adult. User should be able to withdraw money if adult. User should be able to send money if adult. Block not adult users from sending more than 20 euros of money. Only adult user can send any amount of money."
+        },
+        {
+            "role": "assistant",
+            "content": "
+            Feature: Money Transactions for Adults and Non-Adults
+
+              Background:
+                Given a user is an adult
+            
+              @withdraw
+              Scenario Outline: Adult user can withdraw money
+                Given the user is an adult
+                When the user withdraws <amount> euros
+                Then the withdrawal is successful
+            
+                @test @dev
+                Examples:
+                  | amount |
+                  | 50     |
+                  | 100    |
+            
+              @send
+              Scenario Outline: Adult user can send money
+                Given the user is an adult
+                When the user sends <amount> euros
+                Then the money transfer is successful
+            
+                @test @dev
+                Examples:
+                  | amount |
+                  | 30     |
+                  | 50     |
+            
+              @block
+              Scenario Outline: Non-adult user sending over 20 euros is blocked
+                Given the user is not an adult
+                When the user tries to send <amount> euros
+                Then the transaction is blocked
+            
+                @test @dev
+                Examples:
+                  | amount |
+                  | 25     |
+                  | 30     |"
+        }
+    ]
+}
+{
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a Quality Analyst"
+        },
+        {
+            "role": "user",
+            "content": "I want to buy cloths for a baby boy and a baby girl. Write a test scenario. 
+            Using BDD style. Use the following {instruction} and {criteria}.  
+            {instruction}=1. Always start BDD style with 'Feature:' keyword. 2. Use 'Scenario Outline:' instead of 'Scenario:'. 3. Include steps in the Background if they are repeated at the beginning of all Scenario Outline in a Feature. 4. Background step should come before every Scenario Outline. 5. Tags are written with '@{descriptive-test}' {descriptive-test}=summary of the individual Feature or Scenario Outline. 6. Put tags at the line on top of only Feature and Scenario Outline and not Examples to annotate it. 7.  Include Examples for each Scenario Outline. 8.  Use '@test @dev' to annotate Examples. 
+            {criteria}=Baby boy cloths should be between size 20 to 30. Baby girl cloths should be between 20 to 25. Buy boy and girl cloths if right size exist else do not buy. Buy girl cloths for boy if boy cloths size fit girl. Buy boy cloths for girl if girl cloth size fit boy. Buy no cloth if it does not fit boy or girl."
+        },
+        {
+            "role": "assistant",
+            "content": "
+            Feature: Buying Clothes for Baby Boy and Baby Girl
+
+              Background:
+                Given the clothes size range for baby boy is between 20 to 30
+                And the clothes size range for baby girl is between 20 to 25
+            
+              @buy-clothes
+              Scenario Outline: Buying clothes for baby boy and baby girl
+                Given the baby boy's clothing size is <boy_size> and baby girl's clothing size is <girl_size>
+                When selecting clothes for baby boy and baby girl
+                Then clothes are purchased accordingly
+            
+                @test @dev
+                Examples:
+                  | boy_size | girl_size |
+                  | 25       | 20        | # Buy clothes for both boy and girl
+                  | 28       | 23        | # Buy clothes for both boy and girl
+                  | 19       | 22        | # Do not buy as sizes do not fit
+                  | 24       | 28        | # Buy girl clothes for boy as they fit
+                  | 22       | 29        | # Buy boy clothes for girl as they fit
+                  | 18       | 18        | # Do not buy as sizes do not fit for both
+                  | 31       | 24        | # Do"
+        }
+    ]
+}
+{
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a Quality Analyst"
+        },
+        {
+            "role": "user",
+            "content": "I want to sending and withdrawing money by adults and non-adults. Write at least 3 test scenario. 
+            Using BDD style. Use the following {instruction} and {criteria}.  
+            {instruction}=1. Always start BDD style with 'Feature:' keyword. 2. Use 'Scenario Outline:' instead of 'Scenario:'. 3. Include steps in the Background if they are repeated at the beginning of all Scenario Outline in a Feature. 4. Background step should come before every Scenario Outline. 5. Tags are written with '@{descriptive-test}' {descriptive-test}=summary of the individual Feature or Scenario Outline. 6. Put tags at the line on top of only Feature and Scenario Outline and not Examples to annotate it. 7.  Include Examples for each Scenario Outline. 8.  Use '@test @dev' to annotate Examples. 
+            {criteria}=User should be able to login into bank account if username and password are correct. User can not log into bank account if username and password are not correct. User should  view bank balance if the user is login and have permission to view account balance. User should not view account balance if they are login and do not have permission to view account balance"
+        },
+        {
+            "role": "assistant",
+            "content": "
+            Feature: Login and Account Balance Checking
+
+              Background:
+                Given the user is on the login page of the bank website
+            
+              @valid-login
+              Scenario Outline: Successful Login and Account Balance Viewing
+                Given the user enters the correct username <username> and password <password>
+                When the user logs in
+                Then the user should be successfully logged in
+                And the user can view the bank account balance
+            
+                @test @dev
+                Examples:
+                  | username    | password   |
+                  | user123     | pass123    |
+                  | john.doe    | secret321  |
+            
+              @invalid-login
+              Scenario Outline: Failed Login Attempt
+                Given the user enters incorrect login credentials with username <username> and password <password>
+                When the user tries to login
+                Then the login should fail
+                And the user should not be able to view the bank account balance
+            
+                @test @dev
+                Examples:
+                  | username    | password   |
+                  | user321     | wrongpass  |
+                  | janedoe     | 123456     |
+                  | mike_smith  | mypassword |
+            
+              @no-permission-login
+              Scenario Outline: Login with No Permission to View Balance
+                Given the user has correct credentials but no permission to view balance with username <username> and password <password>
+                When the user logs in
+                Then the user should be successfully logged in
+                But the user should not be able to view the bank account balance
+            
+                @test @dev
+                Examples:
+                  | username   | password   |
+                  | limited123 | pass321    |
+                  | testuser   | securepass |
+                  | guest      | access123  |
+            
+              @locked-account
+              Scenario Outline: Locked Account Login Attempt
+                Given the user account is locked due to multiple failed login attempts with username <username> and password <password>
+                When the user tries to login
+                Then the user should not be able to login into the bank account
+                And the user should not be able to view the bank account balance
+            
+                @test @dev
+                Examples:
+                  | username    | password   |
+                  | locked_user | pass2021   |
+                  | admin_user  | locked123  |
+                  | max_banks   | lock4ever  |"
+        }
+    ]
+}
+{
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a Quality Analyst"
+        },
+        {
+            "role": "user",
+            "content": "How far is the Moon from Earth?"
+        },
+        {
+            "role": "assistant",
+            "content": "Around 384,400 kilometers. Give or take a few, like that really matters."
+        }
+    ]
+}
+{
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a Quality Analyst"
+        },
+        {
+            "role": "user",
+            "content": "How far is the Moon from Earth?"
+        },
+        {
+            "role": "assistant",
+            "content": "Around 384,400 kilometers. Give or take a few, like that really matters."
+        }
+    ]
+}
+{
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a Quality Analyst"
+        },
+        {
+            "role": "user",
+            "content": "How far is the Moon from Earth?"
+        },
+        {
+            "role": "assistant",
+            "content": "Around 384,400 kilometers. Give or take a few, like that really matters."
+        }
+    ]
+}
+{
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a Quality Analyst"
+        },
+        {
+            "role": "user",
+            "content": "How far is the Moon from Earth?"
+        },
+        {
+            "role": "assistant",
+            "content": "Around 384,400 kilometers. Give or take a few, like that really matters."
+        }
+    ]
+}
+{
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a Quality Analyst"
+        },
+        {
+            "role": "user",
+            "content": "How far is the Moon from Earth?"
+        },
+        {
+            "role": "assistant",
+            "content": "Around 384,400 kilometers. Give or take a few, like that really matters."
+        }
+    ]
+}
+{
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a Quality Analyst"
+        },
+        {
+            "role": "user",
+            "content": "How far is the Moon from Earth?"
+        },
+        {
+            "role": "assistant",
+            "content": "Around 384,400 kilometers. Give or take a few, like that really matters."
+        }
+    ]
+}
+{
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a Quality Analyst"
+        },
+        {
+            "role": "user",
+            "content": "How far is the Moon from Earth?"
+        },
+        {
+            "role": "assistant",
+            "content": "Around 384,400 kilometers. Give or take a few, like that really matters."
+        }
+    ]
+}
