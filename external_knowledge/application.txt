@@ -1,0 +1,26 @@
+The main users that uses the application are from Spain or France. 
+Main countries:France and Spain.
+The application is only specifically designed for users of the main countries but users from other countries like China can use it.
+Only application for the main countries are available.
+The application is categoried by segment, channel and country
+For segment, there are Corporate application and Household application.
+For channel, there are web application and mobile application.
+For country, the application is categoried according to the main countries.
+
+The application is accessible all across the world.
+The Corporate application is represented with C.
+The Household application is represented with H.
+The web application is represented with W.
+The mobile application is represented with M.
+Application for France is represented with F.
+Application for Spain is represented with S.
+The application name is name up of the initials of the concatination of categories of the segment, channel and country.
+Example is below:
+CWF represents Corporate web application for France.
+HWF represents Household web application for France.
+HMS represents Household mobile application for Spain.
+CMS represents Corporate mobile application for Spain.
+and others
+
+
+

@@ -1,0 +1,50 @@
+The application can only be logged in from the web and mobile by the user. 
+To login from the web, the user needs to use a web browser like google chrome, firefox mozilla, opera and others. 
+If you do not have any of these web browsers please download them and install. 
+The downloaded and installed web browsers has to be the latest version but not older versions.
+It is not possible to log into the web application if the user do not have a web browser.
+To login in from the mobile, the user needs to have an android or IOS device.
+The user can also login from the mobile device using a web browser on the mobile device like google chrome, firefox mozilla, opera and others.
+The user needs to download the application on playstore for android devices and appstore for IOS devices.
+The download application has to be the current version but not an older version.
+It is not possible to log into the mobile application if the user do not have the downloaded application installed.
+Only the UserId and Password is used for login.
+Before login, the user should know the UserId and Password of the user account.
+For successful login, the UserId and Password should be valid else login failed.
+User data validator is used validate the login information.
+
+Here are some example users for login is below: 
+1. UserId: 1234567, Password: haveme
+2. UserId: 2345678, Password: takeme
+3. UserId: 2837492, Password: pounchme
+and others
+
+All users from France or Spain can use the application to login.
+Users from other countries can use the application to login.
+A Corporate web user from France should be able to use the France web Corporate application to login.
+A Corporate web user from Spain should be able to use the Spain web Corporate application to login.
+A Corporate mobile user from France should be able to use the France mobile Corporate application to login.
+A Corporate mobile user from Spain should be able to use the Spain mobile Corporate application to login.
+A Corporate mobile user from France should be able to use the France web Corporate application to login.
+A Corporate mobile user from Spain should be able to use the Spain web Corporate application to login.
+A Corporate web user from France should be able to use the France mobile Corporate application to login.
+A Corporate web user from Spain should be able to use the Spain mobile Corporate application to login.
+A Corporate web user from France should not be able to use the Spain web Corporate application to login.
+A Corporate web user from Spain should not be able to use the France web Corporate application to login.
+A Corporate web user from France should not be able to use the France web Household application to login.
+A Corporate web user from Spain should not be able to use the Spain web Household application to login.
+A Corporate mobile user from France should not be able to use the France mobile Household application to login.
+A Corporate mobile user from Spain should not be able to use the France mobile Household application to login.
+A Household web user from France or Spain should be able to use the France or Spain web Corporate application to login.
+A Household web user from France or Spain should be able to use the France or Spain mobile Corporate application to login.
+A Household web user from France should be able to use the France web Corporate application to login.
+A Household web user from Spain should be able to use the Spain web Corporate application to login.
+A Household mobile user from France should be able to use the France mobile Corporate application to login.
+A Household mobile user from Spain should be able to use the Spain mobile Corporate application to login.
+A Household mobile user from France should be able to use the France web Corporate application to login.
+A Household mobile user from Spain should be able to use the Spain web Corporate application to login.
+A Household web user from France should be able to use the France mobile Corporate application to login.
+A Household web user from Spain should be able to use the Spain mobile Corporate application to login.
+All others combinations of segment, channel and country are allowed to login.
+
+
