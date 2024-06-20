@@ -27,7 +27,7 @@ export function save_file(directory_name, file_name, content) {
     const path = directory_name + file_name
     writeFile(path, content, (err) => {
         if (err) throw err;
-        console.log('The file has been saved!');
+        console.log(`The file has been saved in the ${directory_name} directory!`);
     });
 }
 
@@ -35,5 +35,7 @@ export function get_query(prompts) {
     prompts.forEach(x => {
         if(x.ask) x.answer = prompt(x.question);
     });
-    return prompts.splice(1).reduce((full, first) => { return full+(first.answer.trim().length === 0 ? first.default.trim() : first.answer.trim())+". "}, "")
+    return prompts.splice(1).reduce((full, first) => {
+        return full+(first.answer.trim().length === 0 ? first.default.trim()+" " : first.answer.trim()+". ")}, "")
+            .replace("..", ".").replace(" .", "")
 }

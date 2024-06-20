@@ -3,29 +3,42 @@ import { chatGPT_client, save_file, get_query, prompt } from './helpers/methods.
 import { model_name } from './helpers/constants.js'
 
 async function prompt_chatGPT(client, prompts) {
-    const query = get_query(prompts)
-    console.log(query)
+    const messages = [{"role": "system", "content": prompts[0]["answer"]}]
 
-    const chat_completion = await client.chat.completions.create({
-        messages: [
-            {"role": "system", "content": prompts[0]["answer"]},
-            {"role": "user", "content": query},
-        ],
-        model: model_name,
-      });
+    const timestamp = new Date().getTime()
+    const model_technique = "zero-shot-prompting"
+    const file_name = `${model_technique}_${timestamp}.feature`  
+    const directory_name = './features/'
 
-      const timestamp = new Date().getTime()
-      const model_technique = "zero-shot-prompting"
-      const file_name = `${model_technique}_${timestamp}.feature`  
-      const directory_name = './features/'  
+    let query = ''
+    let reply = ''
+    let keep_generation = 'Y'
+    while (keep_generation.toUpperCase() == 'Y') {
+        if(query.length === 0) { 
+            query = get_query(prompts) 
+            messages.push({"role": "user", "content": query})
+            console.log(query)
+        } 
+        else { 
+            query = prompt("Add more information or press enter to keep generating or press R to regenerate? ")
+            query = query.length === 0 ? 'continue and add more scenarios' : query
+            messages.push({"role": "user", "content": query })
+        }
 
-      const reply = chat_completion.choices[0].message.content
-            .replace("```gherkin", "")
-            .replace("```", "")
+        let chat_completion = await client.chat.completions.create({ messages:messages, model: model_name })
+        reply += chat_completion.choices[0].message.content.replace("```gherkin", "").replace("```", "")
+        console.log(reply)
 
-      console.log(reply)
-      save_file(directory_name, file_name, reply)
-
+        keep_generation = prompt("Do you want to continue generating Y/N. Any response other than Y will close the application? ")
+        if(keep_generation.toUpperCase() == 'Y') {
+            messages.push({"role": "assistant", "content": reply})
+        } else {
+            keep_generation = 'N'
+            console.log(reply)
+            save_file(directory_name, file_name, reply)
+        }
+    } 
+    console.log('Application closed.')
 }
 
 async function main() {
@@ -47,3 +60,4 @@ async function main() {
 }
 
 main()
+

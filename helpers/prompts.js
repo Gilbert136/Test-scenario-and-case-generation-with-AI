@@ -19,9 +19,11 @@ export const user_goal = `I want to sending and withdrawing money by adults and 
 
 export const prompt_action = `Write at least six positive and negative test scenarios with cases.`
 
-export const prompt_output = `Using BDD Gherkin style.`
+export const prompt_output = `Using BDD Gherkin syntax only.`
 
 export const prompt_placeholder = `Follow these below criterias:`
+
+export const prompt_output_regenerate = `Reformat with gherkin syntax.`
 
 export const prompt_context = 
 `- User should be an adult. User should be able to withdraw money if adult. 
