@@ -1,8 +1,9 @@
 import OpenAI from "openai";
 import { writeFile, existsSync, mkdirSync } from 'fs';
 import promptSync from 'prompt-sync';
+import psp from 'prompt-sync-plus';
 
-export const prompt = promptSync({sigint: true});
+export const prompt = psp({sigint: true});
 
 async function check_chatGPT_api_key_validity(client) {
     try {

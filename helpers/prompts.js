@@ -15,7 +15,8 @@ You always follow the instructions below:
 7. Include Examples for each Scenario Outline. 8.  Use '@test @dev' to annotate Examples. 
 9. Include comments if possible.`;
 
-export const user_goal = `I want to sending and withdrawing money by adults and non-adults, so that I can be able to make transactions for my business.`;
+export const user_goal = `I want to sending and withdrawing money by adults and non-adults, 
+so that I can be able to make transactions for my business.`;
 
 export const prompt_action = `Write at least six positive and negative test scenarios with cases.`
 
