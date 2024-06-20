@@ -1,4 +1,4 @@
-import { system_prompt_zero_shot, prompt_action, prompt_output, user_goal, prompt_context, prompt_placeholder } from './helpers/prompts.js'
+import { system_prompt_zero_shot, prompt_action, prompt_output, user_goal, prompt_context, prompt_placeholder, prompt_output_reformat, prompt_output_regenerate } from './helpers/prompts.js'
 import { chatGPT_client, save_file, get_query, prompt } from './helpers/methods.js'
 import { model_name } from './helpers/constants.js'
 
@@ -14,22 +14,37 @@ async function prompt_chatGPT(client, prompts) {
     let reply = ''
     let keep_generation = 'Y'
     while (keep_generation.toUpperCase() == 'Y') {
+        let append_reply = false 
         if(query.length === 0) { 
             query = get_query(prompts) 
             messages.push({"role": "user", "content": query})
             console.log(query)
         } 
-        else { 
-            query = prompt("Add more information or press enter to keep generating or press R to regenerate? ")
-            query = query.length === 0 ? 'continue and add more scenarios' : query
+        else {
+            query = prompt(`Add more information or press enter to keep generating or press R to regenerate or Press r to reformat? `)
+            if(query.trim().length === 0){
+                query = `continue and add more scenarios`
+                append_reply = true
+            }else if(query.trim() === 'R'){
+                query = prompt_output_regenerate
+                append_reply = false
+            } else if(query.trim() === 'r'){
+                query = prompt_output_reformat
+                append_reply = false
+            }
             messages.push({"role": "user", "content": query })
         }
 
         let chat_completion = await client.chat.completions.create({ messages:messages, model: model_name })
-        reply += chat_completion.choices[0].message.content.replace("```gherkin", "").replace("```", "")
+        let chat_completion_response = chat_completion.choices[0].message.content.replace("```gherkin", "").replace("```", "")
+        if(append_reply){
+            reply += chat_completion_response
+        }else{
+            reply = chat_completion_response
+        }
         console.log(reply)
 
-        keep_generation = prompt("Do you want to continue generating Y/N. Any response other than Y will close the application? ")
+        keep_generation = prompt("Do you want to continue generating or reformat Y/N. Any response other than Y will close the application? ")
         if(keep_generation.toUpperCase() == 'Y') {
             messages.push({"role": "assistant", "content": reply})
         } else {

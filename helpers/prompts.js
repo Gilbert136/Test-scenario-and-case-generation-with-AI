@@ -23,7 +23,9 @@ export const prompt_output = `Using BDD Gherkin syntax only.`
 
 export const prompt_placeholder = `Follow these below criterias:`
 
-export const prompt_output_regenerate = `Reformat with gherkin syntax.`
+export const prompt_output_regenerate = `Regenerate with gherkin syntax.`
+
+export const prompt_output_reformat = `Reformat with gherkin syntax.`
 
 export const prompt_context = 
 `- User should be an adult. User should be able to withdraw money if adult. 
