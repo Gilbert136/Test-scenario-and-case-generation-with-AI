@@ -3,7 +3,7 @@ import { writeFile, existsSync, mkdirSync } from 'fs';
 import promptSync from 'prompt-sync';
 import psp from 'prompt-sync-plus';
 
-export const prompt = psp({sigint: true});
+export const prompt = promptSync({sigint: true});
 
 async function check_chatGPT_api_key_validity(client) {
     try {
@@ -34,9 +34,10 @@ export function save_file(directory_name, file_name, content) {
 
 export function get_query(prompts) {
     prompts.forEach(x => {
-        if(x.ask) x.answer = prompt(x.question);
+        if(x.ask) x.answer = prompt(x.question)
+        if(x.answer.trim().length === 0)  x.answer = x.default.trim()+" "
     });
     return prompts.splice(1).reduce((full, first) => {
-        return full+(first.answer.trim().length === 0 ? first.default.trim()+" " : first.answer.trim()+". ")}, "")
-            .replace("..", ".").replace(" .", "")
+        return full+(first.answer.trim()+". ")}, "")
+            .replaceAll("..", ".").replaceAll(" .", "")
 }

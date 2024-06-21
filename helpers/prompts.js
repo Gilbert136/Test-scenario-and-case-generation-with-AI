@@ -1,4 +1,4 @@
-export const system_prompt_zero_shot = `You are a Quality assurance engineer.`;
+export const system_prompt_zero_shot = `You are a Quality assurance engineer.`
 
 export const system_prompt_few_shot = 
 `You are a Quality assurance engineer. You are an expect in writing test scenarios with test cases in BDD Gherkin style. 
@@ -13,10 +13,9 @@ You always follow the instructions below:
 5. Tags are written with '@{descriptive-test}' {descriptive-test}=summary of the individual Feature or Scenario Outline. 
 6. Put tags at the line on top of only Feature and Scenario Outline and not Examples to annotate it. 
 7. Include Examples for each Scenario Outline. 8.  Use '@test @dev' to annotate Examples. 
-9. Include comments if possible.`;
+9. Include comments if possible.`
 
-export const user_goal = `I want to sending and withdrawing money by adults and non-adults, 
-so that I can be able to make transactions for my business.`;
+export const user_goal = `I want to send and withdraw money by adults and non-adults, so that I can be able to make transactions for my business.`
 
 export const prompt_action = `Write at least six positive and negative test scenarios with cases.`
 
@@ -29,19 +28,14 @@ export const prompt_output_regenerate = `Regenerate with gherkin syntax.`
 export const prompt_output_reformat = `Reformat with gherkin syntax.`
 
 export const prompt_context = 
-`- User should be an adult. User should be able to withdraw money if adult. 
-- User should be able to send money if adult. 
-- User should not be able to send more than 20 euros of money if not adult. 
-- User should be able to send any amount of money if I am only an adult. `
+`User should be an adult. User should be able to withdraw money if adult. User should be able to send money if adult. User should not be able to send more than 20 euros of money if not adult. User should be able to send any amount of money if I am only an adult. `
 
 
 export const user_prompt_few_shot = 
-`
-${user_goal}
-${prompt_action} ${prompt_output} 
+`${user_goal} ${prompt_action} ${prompt_output} 
 ${prompt_placeholder} 
-${prompt_output}
-`;
+${prompt_context} 
+`
 
 export const assistant_prompt_few_shot = 
 `
