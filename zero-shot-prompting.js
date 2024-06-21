@@ -16,7 +16,7 @@ async function prompt_chatGPT(client, prompts) {
     while (keep_generation.toUpperCase() == 'Y') {
         let append_reply = false 
         if(query.length === 0) { 
-            query = get_query(prompts) 
+            query = await get_query(prompts) 
             messages.push({"role": "user", "content": query})
             console.log(query)
         } 

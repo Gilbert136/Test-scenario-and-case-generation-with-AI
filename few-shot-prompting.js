@@ -16,7 +16,7 @@ async function prompt_chatGPT(client, prompts) {
     while (keep_generation.toUpperCase() == 'Y') {
         let append_reply = false 
         if(query.length === 0) { 
-            query = get_query(prompts) 
+            query = await get_query(prompts) 
             messages.push({"role": "user", "content": user_prompt_few_shot})
             messages.push({"role":"assistant","content": assistant_prompt_few_shot})
             messages.push({"role": "user", "content": query})
@@ -76,16 +76,4 @@ async function main() {
     }
 }
 
-//main()
-
-import prompts from 'prompts'
-
-(async () => {
-    const response = await prompts({
-      type: 'text',
-      name: 'meaning',
-      message: 'What is the meaning of life?'
-    });
-  
-    console.log(response.meaning);
-  })();
+main()

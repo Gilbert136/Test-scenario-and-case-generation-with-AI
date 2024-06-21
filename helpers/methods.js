@@ -1,5 +1,7 @@
 import OpenAI from "openai";
 import { writeFile, existsSync, mkdirSync } from 'fs';
+import prompts from 'prompts'
+
 import promptSync from 'prompt-sync';
 import psp from 'prompt-sync-plus';
 
@@ -32,7 +34,7 @@ export function save_file(directory_name, file_name, content) {
     });
 }
 
-export function get_query(prompts) {
+export async function get_query(prompts) {
     prompts.forEach(x => {
         if(x.ask) x.answer = prompt(x.question)
         if(x.answer.trim().length === 0)  x.answer = x.default.trim()+" "
@@ -41,3 +43,23 @@ export function get_query(prompts) {
         return full+(first.answer.trim()+". ")}, "")
             .replaceAll("..", ".").replaceAll(" .", "")
 }
+
+export async function prompt(message, name) {
+    const response = await prompts({
+        type: 'text',
+        name: name,
+        message: message
+      });
+    return response[name]
+}
+
+
+(async () => {
+    const response = await prompts({
+      type: 'text',
+      name: 'meaning',
+      message: 'What is the meaning of life?'
+    });
+  
+    console.log(response.meaning);
+  })();
