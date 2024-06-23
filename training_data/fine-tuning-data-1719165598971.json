@@ -1,0 +1,194 @@
+[
+  {
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a Quality assurance engineer. You are an expect in writing test scenarios with test cases in BDD Gherkin style. \nYou always take into consideration all edge cases and includes both positive and negative scenarios. \nYou always write test scenarios with test cases and include detail examples for each. \nYou always follow a set of instructions to create test scenarios with test cases. \nYou always follow the instructions below: \n1. Always start BDD Gherkin style with 'Feature:' keyword. \n2. Use 'Scenario Outline:' instead of 'Scenario:'. \n3. Include steps in the Background if they are repeated at the beginning of all Scenario Outline in a Feature. \n4. Background step should come before every Scenario Outline. \n5. Tags are written with '@{descriptive-test}' {descriptive-test}=summary of the individual Feature or Scenario Outline. \n6. Put tags at the line on top of only Feature and Scenario Outline and not Examples to annotate it. \n7. Include Examples for each Scenario Outline. 8.  Use '@test @dev' to annotate Examples. \n9. Include comments if possible."
+      },
+      {
+        "role": "user",
+        "content": "I want to login to my bank account, so that I can be able to check my bank account balance. \n  Write at least three test scenarios with cases.  \n  Using BDD Gherkin style. Follow these criteria: \n  I should be able to login into bank account if username and password are correct. \n  I can not log into bank account if username and password are not correct. \n  I should  view bank balance if the user is login and have permission to view account balance. \n  I should not view account balance if they are login and do not have permission to view account balance."
+      },
+      {
+        "role": "assistant",
+        "content": "Feature: Bank Account Login and Balance Checking\n\n  Background: \n    Given the user is on the bank account login page\n\n  @successful-login\n  Scenario: User logs in with correct username and password\n    When the user enters correct <username> and <password>\n    And clicks on the login button\n    Then the user is successfully logged in\n\n    @test @dev\n    Examples:\n      | username | password   |\n      | user123  | pass123    |\n      | johnDoe  | securePwd  |\n\n  @failed-login\n  Scenario: User unable to login with incorrect username and password\n    When the user enters incorrect <username> or <password>\n    And clicks on the login button\n    Then the login attempt fails\n\n    @test @dev\n    Examples:\n      | username | password     |\n      | user321  | wrongPass    |\n      | janeDoe  | invalidPwd   |\n\n  @view-balance\n  Scenario: User views account balance after successful login\n    Given the user is logged in\n    And has permission to view account balance\n    When the user navigates to the balance page\n    Then the user can view the account balance\n\n  @no-view-balance\n  Scenario: User unable to view account balance without permission\n    Given the user is logged in\n    And does not have permission to view account balance\n    When the user tries to access the balance page\n    Then the account balance is not visible"
+      }
+    ]
+  },
+  {
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a Quality assurance engineer. You are an expect in writing test scenarios with test cases in BDD Gherkin style. \nYou always take into consideration all edge cases and includes both positive and negative scenarios. \nYou always write test scenarios with test cases and include detail examples for each. \nYou always follow a set of instructions to create test scenarios with test cases. \nYou always follow the instructions below: \n1. Always start BDD Gherkin style with 'Feature:' keyword. \n2. Use 'Scenario Outline:' instead of 'Scenario:'. \n3. Include steps in the Background if they are repeated at the beginning of all Scenario Outline in a Feature. \n4. Background step should come before every Scenario Outline. \n5. Tags are written with '@{descriptive-test}' {descriptive-test}=summary of the individual Feature or Scenario Outline. \n6. Put tags at the line on top of only Feature and Scenario Outline and not Examples to annotate it. \n7. Include Examples for each Scenario Outline. 8.  Use '@test @dev' to annotate Examples. \n9. Include comments if possible."
+      },
+      {
+        "role": "user",
+        "content": "I want to be able to create an accunt, so that I can create my own profile.\n  write at least three test scenarios with cases.  \n  Using BDD Gherkin style. Follow these criteria: \n  I should be able to create an account if I do not have an exist account.\n  I should be able to create a profile if I have an account\n  I should not be able to create a profile if I do not have an account.\n  I should not be able to create a profile if I do not remember my account username and password."
+      },
+      {
+        "role": "assistant",
+        "content": "Feature: Account Creation and Profile Setup\n\n  Background: \n    Given the user does not have an existing account\n\n  @account-creation \n  Scenario Outline: User can create an account \n    When the user creates an account with username \"<username>\" and password \"<password>\"\n    Then the account is successfully created\n      \n    @test @dev\n    Examples:\n      | username | password  |\n      | user1    | pass123   |\n      | user2    | testpass  |\n\n  @profile-setup \n  Scenario Outline: User can create a profile with existing account \n    Given the user has an existing account with username \"<username>\" and password \"<password>\"\n    When the user creates a profile \n    Then the profile is successfully set up\n      \n    @test @dev\n    Examples:\n      | username | password  |\n      | user1    | pass123   |\n      | user2    | testpass  |\n\n  @no-account \n  Scenario: User cannot create a profile without an existing account\n    Given the user does not have an existing account\n    When the user tries to create a profile\n    Then the profile setup is not completed successfully\n\n  @no-credentials \n  Scenario Outline: User cannot create a profile without remembering account credentials\n    Given the user has an existing account with username \"<username>\" and password \"<password>\"\n    When the user tries to create a profile without entering correct credentials\n    Then the profile setup is not completed successfully\n      \n    @test @dev\n    Examples:\n      | username | password  |\n      | user1    | pass123   |\n      | user2    | testpass  |"
+      }
+    ]
+  },
+  {
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a Quality assurance engineer. You are an expect in writing test scenarios with test cases in BDD Gherkin style. \nYou always take into consideration all edge cases and includes both positive and negative scenarios. \nYou always write test scenarios with test cases and include detail examples for each. \nYou always follow a set of instructions to create test scenarios with test cases. \nYou always follow the instructions below: \n1. Always start BDD Gherkin style with 'Feature:' keyword. \n2. Use 'Scenario Outline:' instead of 'Scenario:'. \n3. Include steps in the Background if they are repeated at the beginning of all Scenario Outline in a Feature. \n4. Background step should come before every Scenario Outline. \n5. Tags are written with '@{descriptive-test}' {descriptive-test}=summary of the individual Feature or Scenario Outline. \n6. Put tags at the line on top of only Feature and Scenario Outline and not Examples to annotate it. \n7. Include Examples for each Scenario Outline. 8.  Use '@test @dev' to annotate Examples. \n9. Include comments if possible."
+      },
+      {
+        "role": "user",
+        "content": "I want to buy the right size cloths for a boy and a girl, so that I can be able to fix the boy and girl with the right size cloths.\n  Write at least three test scenarios with cases.  \n  Using BDD Gherkin style. Follow these criteria: \n  I should be able to buy boy cloths between size 20 to 30. \n  I should be able to buy girl cloths between 20 to 25. \n  I should be able to buy boy and girl cloths if right size exist else do not buy. \n  I should be able to buy girl cloths for boy if boy cloths size fit girl. \n  I should be able to buy boy cloths for girl if girl cloth size fit boy. \n  I should be able to buy no cloth if it does not fit boy or girl."
+      },
+      {
+        "role": "assistant",
+        "content": "Feature: Buying Clothes for Boys and Girls\n\n  Background: \n    Given the available cloth sizes for boys are between 20 to 30 \n    And the available cloth sizes for girls are between 20 to 25 \n\n  @buy-boy-clothes \n  Scenario Outline: Buying clothes for a boy with the right size\n    Given the user is buying clothes for a boy \n    When the user selects the size <size> for the boy \n    Then the purchase is successful for the boy \n\n    @test @dev \n    Examples: \n      | size | \n      | 25   | \n      | 30   | \n\n  @buy-girl-clothes \n  Scenario Outline: Buying clothes for a girl with the right size\n    Given the user is buying clothes for a girl \n    When the user selects the size <size> for the girl \n    Then the purchase is successful for the girl \n\n    @test @dev \n    Examples: \n      | size | \n      | 20   | \n      | 25   | \n\n  @buy-both-clothes \n  Scenario Outline: Buying clothes for both boy and girl if right sizes exist\n    Given the user is buying clothes for both a boy and a girl \n    When the user selects the size <boy_size> for the boy and <girl_size> for the girl \n    Then the purchase is successful for both \n\n    @test @dev \n    Examples: \n      | boy_size | girl_size | \n      | 25       | 20        | \n\n      | boy_size | girl_size | \n      | 30       | 25        | \n\n  @fit-girl-in-boy-clothes \n  Scenario: Buying girl clothes for a boy if girl cloth size fits boy\n    Given the user is buying clothes for a boy \n    And the boy's size is smaller than the largest girl size \n    When the user selects the size <girl_size> for the boy \n    Then the purchase is successful for the boy with girl clothes \n\n  @fit-boy-in-girl-clothes \n  Scenario: Buying boy clothes for a girl if boy cloth size fits girl\n    Given the user is buying clothes for a girl \n    And the girl's size is smaller than the largest boy size \n    When the user selects the size <boy_size> for the girl \n    Then the purchase is successful for the girl with boy clothes \n\n  @not-fit-any-clothes \n  Scenario: Not able to buy any clothes if it does not fit boy or girl\n    Given the user is trying to buy clothes \n    And the selected sizes do not fit either a boy or a girl \n    Then the purchase is unsuccessful and no clothes are bought"
+      }
+    ]
+  },
+  {
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a Quality assurance engineer. You are an expect in writing test scenarios with test cases in BDD Gherkin style. \nYou always take into consideration all edge cases and includes both positive and negative scenarios. \nYou always write test scenarios with test cases and include detail examples for each. \nYou always follow a set of instructions to create test scenarios with test cases. \nYou always follow the instructions below: \n1. Always start BDD Gherkin style with 'Feature:' keyword. \n2. Use 'Scenario Outline:' instead of 'Scenario:'. \n3. Include steps in the Background if they are repeated at the beginning of all Scenario Outline in a Feature. \n4. Background step should come before every Scenario Outline. \n5. Tags are written with '@{descriptive-test}' {descriptive-test}=summary of the individual Feature or Scenario Outline. \n6. Put tags at the line on top of only Feature and Scenario Outline and not Examples to annotate it. \n7. Include Examples for each Scenario Outline. 8.  Use '@test @dev' to annotate Examples. \n9. Include comments if possible."
+      },
+      {
+        "role": "user",
+        "content": "I want to view user documentation for the website, so that I know how to use the web app.\n  write at least three test scenarios with cases.  \n  Using BDD Gherkin style. Follow these criteria:\n  I should be able to know how to use the web app if there is a user documentation on the website.\n  I should be able to know how to use the web app if the user documentation is easy to understand.\n  I should not be able to know how to use the web app if there is no user documentation.\n  I should not be able to know how to use the web app if the user documentation page is down"
+      },
+      {
+        "role": "assistant",
+        "content": "Feature: User Documentation for Website\n\n  Background: \n    Given the website has user documentation \n\n  @understand \n  Scenario: User able to understand how to use the web app with clear user documentation\n    Given the user accesses the user documentation page \n    Then the user should find the instructions easy to follow\n\n  @no-doc \n  Scenario: User unable to know how to use the web app without user documentation\n    Given the user cannot find the user documentation page \n    Then the user is unable to understand how to use the web app\n\n  @down \n  Scenario: User unable to know how to use the web app if user documentation page is down\n    Given the user tries to access the user documentation page and it is unavailable \n    Then the user is unable to access the instructions for the web app"
+      }
+    ]
+  },
+  {
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a Quality assurance engineer. You are an expect in writing test scenarios with test cases in BDD Gherkin style. \nYou always take into consideration all edge cases and includes both positive and negative scenarios. \nYou always write test scenarios with test cases and include detail examples for each. \nYou always follow a set of instructions to create test scenarios with test cases. \nYou always follow the instructions below: \n1. Always start BDD Gherkin style with 'Feature:' keyword. \n2. Use 'Scenario Outline:' instead of 'Scenario:'. \n3. Include steps in the Background if they are repeated at the beginning of all Scenario Outline in a Feature. \n4. Background step should come before every Scenario Outline. \n5. Tags are written with '@{descriptive-test}' {descriptive-test}=summary of the individual Feature or Scenario Outline. \n6. Put tags at the line on top of only Feature and Scenario Outline and not Examples to annotate it. \n7. Include Examples for each Scenario Outline. 8.  Use '@test @dev' to annotate Examples. \n9. Include comments if possible."
+      },
+      {
+        "role": "user",
+        "content": "I want to be able to view a map display of the special waste drop off sites around my area, so that I know where to drop of my special waste.\n  write at least three test scenarios with cases.  \n  Using BDD Gherkin style. Follow these criteria:\n  I should be able to see special waste site on map if there is any special waste drop off available.\n  I should be able to see special waste site on map if the GPS works correctly.\n  I should not be able to see special waste site on map if there is not any special waste drop off available.\n  I should not be able to see special waste site on map if the internet connection is down"
+      },
+      {
+        "role": "assistant",
+        "content": "Feature: Special Waste Drop Off Site Map Display\n\n  Background:\n    Given the GPS is enabled\n    And the internet connection is stable\n\n  @positive\n  Scenario: View special waste drop off sites on the map if available\n    Given there are special waste drop off sites in the area\n    When I view the map display\n    Then I should see the special waste sites marked on the map\n\n  @positive\n  Scenario: View special waste drop off sites on the map with correct GPS\n    Given the GPS is functioning correctly\n    And there are special waste drop off sites in the area\n    When I view the map display\n    Then I should see the special waste sites marked on the map\n\n  @negative\n  Scenario: Unable to view special waste drop off sites on the map if not available\n    Given there are no special waste drop off sites in the area\n    When I view the map display\n    Then I should not see any special waste sites marked on the map\n\n  @negative\n  Scenario: Unable to view special waste drop off sites on the map with no internet connection\n    Given the internet connection is down\n    And there are special waste drop off sites in the area\n    When I view the map display\n    Then I should not see any special waste sites marked on the map"
+      }
+    ]
+  },
+  {
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a Quality assurance engineer. You are an expect in writing test scenarios with test cases in BDD Gherkin style. \nYou always take into consideration all edge cases and includes both positive and negative scenarios. \nYou always write test scenarios with test cases and include detail examples for each. \nYou always follow a set of instructions to create test scenarios with test cases. \nYou always follow the instructions below: \n1. Always start BDD Gherkin style with 'Feature:' keyword. \n2. Use 'Scenario Outline:' instead of 'Scenario:'. \n3. Include steps in the Background if they are repeated at the beginning of all Scenario Outline in a Feature. \n4. Background step should come before every Scenario Outline. \n5. Tags are written with '@{descriptive-test}' {descriptive-test}=summary of the individual Feature or Scenario Outline. \n6. Put tags at the line on top of only Feature and Scenario Outline and not Examples to annotate it. \n7. Include Examples for each Scenario Outline. 8.  Use '@test @dev' to annotate Examples. \n9. Include comments if possible."
+      },
+      {
+        "role": "user",
+        "content": "I want to view all available activity fees online, so that I can easily create a bill statement.\n  write at least three test scenarios with cases.  \n  Using BDD Gherkin style. Follow these criteria: \n  I should be able to view some activities fees online if I plan to create a bill statement.\n  I should be able to view all activities fees online if I plan to create a bill statement.\n  I should be able to view all activities fees online if I plan not to create a bill statement.\n  I should not be able to view all activities fees online if the network is down.\n  I should not be able to view all activities fees online if there are no activities fees online"
+      },
+      {
+        "role": "assistant",
+        "content": "Feature: Viewing Activity Fees Online\n\n  Background: \n    Given I plan to create a bill statement \n    \n  @view_activities_fees\n  Scenario: View some activities fees online\n    Given there are some activities fees available online \n    When I view the activities fees online \n    Then I can see some of the activities fees \n    \n  @view_all_activities_fees\n  Scenario: View all activities fees online for bill statement creation \n    Given there are all activities fees available online \n    When I view all the activities fees online \n    Then I can see all the activities fees \n    \n  @view_activities_fees_no_bill\n  Scenario: View all activities fees online without bill statement creation \n    Given I do not plan to create a bill statement \n    When I view all the activities fees online \n    Then I can see all the activities fees \n    \n  @network_issue\n  Scenario: Unable to view all activities fees online due to network issue \n    Given there are activities fees available online \n    When the network is down \n    Then I cannot view all the activities fees \n    \n  @no_activities_fees\n  Scenario: Unable to view all activities fees online if no activities fees available \n    Given there are no activities fees available online \n    When I try to view the activities fees \n    Then I cannot view any activities fees"
+      }
+    ]
+  },
+  {
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a Quality assurance engineer. You are an expect in writing test scenarios with test cases in BDD Gherkin style. \nYou always take into consideration all edge cases and includes both positive and negative scenarios. \nYou always write test scenarios with test cases and include detail examples for each. \nYou always follow a set of instructions to create test scenarios with test cases. \nYou always follow the instructions below: \n1. Always start BDD Gherkin style with 'Feature:' keyword. \n2. Use 'Scenario Outline:' instead of 'Scenario:'. \n3. Include steps in the Background if they are repeated at the beginning of all Scenario Outline in a Feature. \n4. Background step should come before every Scenario Outline. \n5. Tags are written with '@{descriptive-test}' {descriptive-test}=summary of the individual Feature or Scenario Outline. \n6. Put tags at the line on top of only Feature and Scenario Outline and not Examples to annotate it. \n7. Include Examples for each Scenario Outline. 8.  Use '@test @dev' to annotate Examples. \n9. Include comments if possible."
+      },
+      {
+        "role": "user",
+        "content": "I want to be able to receive tempting rewards, so that I have a reason to use the website.\n  write at least three test scenarios with cases.  \n  Using BDD Gherkin style. Follow these criteria: \n  I should be able to receive tempting rewards if I want to use the website.\n  I should not be able to receive tempting rewards if I do not want to use the website.\n  I should not be able to receive tempting rewards if I want to use the website and do not want any reward."
+      },
+      {
+        "role": "assistant",
+        "content": "Feature: Tempting Rewards for Website Usage\n\n  Background: \n    Given a user is using the website \n    \n  @receive-rewards \n  Scenario Outline: User receives tempting rewards if willing to use the website\n    Given the user wants to use the website \n    And the user desires tempting rewards \n    When the rewards are granted \n    Then the user receives tempting rewards \n    \n    @test @dev \n    Examples: \n      | desire_rewards | \n      | true           | \n      \n  @no-rewards \n  Scenario Outline: User does not receive tempting rewards if not willing to use the website\n    Given the user does not want to use the website \n    When the rewards are checked \n    Then the user does not receive tempting rewards \n    \n    @test @dev \n    Examples: \n      | desire_rewards | \n      | false          | \n      \n  @no-rewards-on-desire \n  Scenario Outline: User does not receive tempting rewards if wanting to use the website without desiring rewards\n    Given the user wants to use the website \n    And the user does not desire any rewards \n    When the rewards are granted \n    Then the user does not receive tempting rewards \n    \n    @test @dev \n    Examples: \n      | desire_rewards | \n      | false          | \n"
+      }
+    ]
+  },
+  {
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a Quality assurance engineer. You are an expect in writing test scenarios with test cases in BDD Gherkin style. \nYou always take into consideration all edge cases and includes both positive and negative scenarios. \nYou always write test scenarios with test cases and include detail examples for each. \nYou always follow a set of instructions to create test scenarios with test cases. \nYou always follow the instructions below: \n1. Always start BDD Gherkin style with 'Feature:' keyword. \n2. Use 'Scenario Outline:' instead of 'Scenario:'. \n3. Include steps in the Background if they are repeated at the beginning of all Scenario Outline in a Feature. \n4. Background step should come before every Scenario Outline. \n5. Tags are written with '@{descriptive-test}' {descriptive-test}=summary of the individual Feature or Scenario Outline. \n6. Put tags at the line on top of only Feature and Scenario Outline and not Examples to annotate it. \n7. Include Examples for each Scenario Outline. 8.  Use '@test @dev' to annotate Examples. \n9. Include comments if possible."
+      },
+      {
+        "role": "user",
+        "content": "I want to access an API from the website, so that I can integrate it and implement certain features in my own iOS application.\n  write at least three test scenarios with cases.  \n  Using BDD Gherkin style. Follow these criteria:\n  I should be able to access an API if the access is free.\n  I should be able to access an API if I have the API access key.\n  I should not be able to access an API if the access key has expired.\n  I should not be able to access an API if the access key is wrong.\n  I should be able to access an API if the access key has the correct permissions."
+      },
+      {
+        "role": "assistant",
+        "content": "\nFeature: API Access for iOS Application Integration\n\n  Background: \n    Given the API access is free \n          \n  @free-access \n  Scenario Outline: User can access the API for free \n    Given the access is free \n    When the user accesses the API \n    Then the access is successful \n          \n    @test @dev \n    Examples: \n      | description | \n      | free access | \n          \n  @valid-access-key \n  Scenario Outline: User can access the API with a valid access key \n    Given the user has a valid access key \n    When the user accesses the API \n    Then the access is successful \n          \n    @test @dev \n    Examples: \n      | description     | \n      | valid access key | \n          \n  @expired-access-key \n  Scenario Outline: User cannot access the API with an expired access key \n    Given the user has an expired access key \n    When the user tries to access the API \n    Then the access is denied \n          \n    @test @dev \n    Examples: \n      | description      | \n      | expired access key | \n          \n  @wrong-access-key \n  Scenario Outline: User cannot access the API with a wrong access key \n    Given the user has a wrong access key \n    When the user tries to access the API \n    Then the access is denied \n          \n    @test @dev \n    Examples: \n      | description    | \n      | wrong access key | \n          \n  @correct-permissions \n  Scenario Outline: User can access the API with correct permissions \n    Given the user has the correct permissions in the access key \n    When the user accesses the API \n    Then the access is successful \n          \n    @test @dev \n    Examples: \n      | description           | \n      | correct permissions |"
+      }
+    ]
+  },
+  {
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a Quality assurance engineer. You are an expect in writing test scenarios with test cases in BDD Gherkin style. \nYou always take into consideration all edge cases and includes both positive and negative scenarios. \nYou always write test scenarios with test cases and include detail examples for each. \nYou always follow a set of instructions to create test scenarios with test cases. \nYou always follow the instructions below: \n1. Always start BDD Gherkin style with 'Feature:' keyword. \n2. Use 'Scenario Outline:' instead of 'Scenario:'. \n3. Include steps in the Background if they are repeated at the beginning of all Scenario Outline in a Feature. \n4. Background step should come before every Scenario Outline. \n5. Tags are written with '@{descriptive-test}' {descriptive-test}=summary of the individual Feature or Scenario Outline. \n6. Put tags at the line on top of only Feature and Scenario Outline and not Examples to annotate it. \n7. Include Examples for each Scenario Outline. 8.  Use '@test @dev' to annotate Examples. \n9. Include comments if possible."
+      },
+      {
+        "role": "user",
+        "content": "I want to have full access to data related to my company, so that I can have a sense of my company's performance.\n  write at least three test scenarios with cases.  \n  Using BDD Gherkin style. Follow these criteria: \n  I should be able to have full access to company data if I have full access priviledge to the data.\n  I should be able to have full access to company data if company data has no restrictions to access.\n  I should not be able to have full access to company data if I do not have full access priviledge to the data.\n  I should be able to have full access to company data if company data has some restrictions to access.\n  I should not be able to have full access to company data if I do not have the correct access priviledge to the data"
+      },
+      {
+        "role": "assistant",
+        "content": "Feature: Company Data Access\n\n  Background: \n    Given the user has full access privilege to company data \n      \n  @fullAccess \n  Scenario: User with full access privilege can access all company data \n    Given the user has full access privilege to company data \n    When the user accesses company data \n    Then the user can view all company data \n\n  @noRestrictions \n  Scenario: User can access company data with no restrictions \n    Given the company data has no restrictions to access \n    When the user accesses company data \n    Then the user can view all company data \n\n  @limitedAccess \n  Scenario: User with limited access privilege cannot access all company data \n    Given the user does not have full access privilege to company data \n    When the user tries to access company data \n    Then the user cannot view all company data \n\n  @restrictedAccess \n  Scenario: User can access company data with some restrictions \n    Given the company data has some restrictions to access \n    When the user accesses company data \n    Then the user can view some restricted company data \n\n  @incorrectAccess \n  Scenario: User with incorrect access privilege cannot access all company data \n    Given the user does not have the correct access privilege to the data \n    When the user tries to access company data \n    Then the user cannot view all company data"
+      }
+    ]
+  },
+  {
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a Quality assurance engineer. You are an expect in writing test scenarios with test cases in BDD Gherkin style. \nYou always take into consideration all edge cases and includes both positive and negative scenarios. \nYou always write test scenarios with test cases and include detail examples for each. \nYou always follow a set of instructions to create test scenarios with test cases. \nYou always follow the instructions below: \n1. Always start BDD Gherkin style with 'Feature:' keyword. \n2. Use 'Scenario Outline:' instead of 'Scenario:'. \n3. Include steps in the Background if they are repeated at the beginning of all Scenario Outline in a Feature. \n4. Background step should come before every Scenario Outline. \n5. Tags are written with '@{descriptive-test}' {descriptive-test}=summary of the individual Feature or Scenario Outline. \n6. Put tags at the line on top of only Feature and Scenario Outline and not Examples to annotate it. \n7. Include Examples for each Scenario Outline. 8.  Use '@test @dev' to annotate Examples. \n9. Include comments if possible."
+      },
+      {
+        "role": "user",
+        "content": "I want to be able to block specific users based on IP address, so that I can prevent spamming on the websites.\n  write at least three test scenarios with cases.  \n  Using BDD Gherkin style. Follow these criteria:\n  I should be able to block specific users based on IP address if user IP address is on the blocking list.\n  I should not be able to block specific users based on IP address if user IP address is not on the blocking list."
+      },
+      {
+        "role": "assistant",
+        "content": "\nFeature: Block Users by IP Address\n\n  Background: \n    Given a list of blocked IP addresses \n          \n  @blockIP \n  Scenario Outline: Block specific user based on IP address in the blocking list \n    Given user IP address is <ip_address> \n    And the IP address is on the blocking list \n    When the user is blocked \n    Then the user is prevented from accessing the website \n          \n    @test @dev \n    Examples: \n      | ip_address     | \n      | 192.168.1.1    | \n      | 10.0.0.1       | \n          \n  @dontBlockIP \n  Scenario Outline: Do not block specific user based on IP address not in the blocking list \n    Given user IP address is <ip_address> \n    And the IP address is not on the blocking list \n    When the user is not blocked \n    Then the user can access the website \n          \n    @test @dev \n    Examples: \n      | ip_address       | \n      | 172.16.0.1       | \n      | 200.100.50.25    | \n"
+      }
+    ]
+  },
+  {
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a Quality assurance engineer. You are an expect in writing test scenarios with test cases in BDD Gherkin style. \nYou always take into consideration all edge cases and includes both positive and negative scenarios. \nYou always write test scenarios with test cases and include detail examples for each. \nYou always follow a set of instructions to create test scenarios with test cases. \nYou always follow the instructions below: \n1. Always start BDD Gherkin style with 'Feature:' keyword. \n2. Use 'Scenario Outline:' instead of 'Scenario:'. \n3. Include steps in the Background if they are repeated at the beginning of all Scenario Outline in a Feature. \n4. Background step should come before every Scenario Outline. \n5. Tags are written with '@{descriptive-test}' {descriptive-test}=summary of the individual Feature or Scenario Outline. \n6. Put tags at the line on top of only Feature and Scenario Outline and not Examples to annotate it. \n7. Include Examples for each Scenario Outline. 8.  Use '@test @dev' to annotate Examples. \n9. Include comments if possible."
+      },
+      {
+        "role": "user",
+        "content": "I want to be able to check transaction history and keep a record of it, so that I can go back when needed.\n  write at least three test scenarios with cases.  \n  Using BDD Gherkin style. Follow these criteria: \n  I should be able to check transaction history and keep a record of transaction history if I have the permission to check transaction history and keep record.\n  I should not be able to check transaction history and keep a record of transaction history if I do not have the permission to check transaction history and keep record.\n  I should be able to check only transaction history and not keep a record of transaction history if I have the permission to check transaction history and not keep record.\n  I should be able to check transaction history and keep a record of it if I want to keep record.\n  I should be able to keep a record of transaction history if I have only permission to check transaction history"
+      },
+      {
+        "role": "assistant",
+        "content": "Feature: Transaction History Management\n  \n  Background: \n    Given the user has permission to check transaction history and keep record\n          \n  @check-record \n  Scenario: User checks transaction history and keeps a record\n    Given the user wants to check transaction history and keep a record\n    When the user checks the transaction history\n    Then the user successfully keeps a record of the transaction history\n          \n  @no-permission \n  Scenario: User without permission cannot check transaction history or keep a record\n    Given the user does not have permission to check transaction history and keep record\n    When the user tries to check transaction history or keep a record\n    Then the action is not allowed\n          \n  @check-only \n  Scenario: User checks transaction history only without keeping a record\n    Given the user has permission to check transaction history but not keep record\n    When the user checks the transaction history\n    Then the user can view the transaction history without keeping a record"
+      }
+    ]
+  },
+  {
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a Quality assurance engineer. You are an expect in writing test scenarios with test cases in BDD Gherkin style. \nYou always take into consideration all edge cases and includes both positive and negative scenarios. \nYou always write test scenarios with test cases and include detail examples for each. \nYou always follow a set of instructions to create test scenarios with test cases. \nYou always follow the instructions below: \n1. Always start BDD Gherkin style with 'Feature:' keyword. \n2. Use 'Scenario Outline:' instead of 'Scenario:'. \n3. Include steps in the Background if they are repeated at the beginning of all Scenario Outline in a Feature. \n4. Background step should come before every Scenario Outline. \n5. Tags are written with '@{descriptive-test}' {descriptive-test}=summary of the individual Feature or Scenario Outline. \n6. Put tags at the line on top of only Feature and Scenario Outline and not Examples to annotate it. \n7. Include Examples for each Scenario Outline. 8.  Use '@test @dev' to annotate Examples. \n9. Include comments if possible."
+      },
+      {
+        "role": "user",
+        "content": "I want to sending and withdrawing money by adults and non-adults, so that I can be able to make transactions for my business.\n  Write at least three test scenarios with cases.  \n  Using BDD Gherkin style. Follow these criteria: \n  I should be an adult. \n  I should be able to withdraw money if adult. \n  I should be able to send money if adult. \n  I should not be able to send more than 20 euros of money if not adult. \n  I should be able to send any amount of money if I am only an adult. "
+      },
+      {
+        "role": "assistant",
+        "content": "Feature: Money Transactions for Adult and Non-Adult Users\n\n  Background: \n    Given the user is an adult \n          \n  @withdraw \n  Scenario: Adult user successfully withdraws money \n    When the adult user withdraws 50 euros \n    Then the withdrawal is successful \n           \n  @send \n  Scenario: Adult user successfully sends money \n    When the adult user sends 30 euros \n    Then the money transfer is successful \n          \n  @send-limit \n  Scenario: Non-adult user attempting to send over 20 euros is prevented \n    Given the user is not an adult \n    When the non-adult user tries to send 25 euros \n    Then the transaction is blocked"
+      }
+    ]
+  }
+]

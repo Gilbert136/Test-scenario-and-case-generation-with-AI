@@ -1,4 +1,4 @@
-import { system_prompt_zero_shot, system_prompt_few_shot, assistant_prompt_few_shot, user_prompt_few_shot, prompt_action, prompt_output, user_goal, prompt_context, prompt_placeholder, prompt_output_reformat, prompt_output_regenerate } from './helpers/prompts.js'
+import { system_prompt_few_shot, assistant_prompt_few_shot, user_prompt_few_shot, prompt_action, prompt_output, user_goal, prompt_context, prompt_placeholder, prompt_output_reformat, prompt_output_regenerate } from './helpers/prompts.js'
 import { chatGPT_client, save_file, get_query, prompt } from './helpers/methods.js'
 import { model_name, open_api_key } from './helpers/constants.js'
 
@@ -7,7 +7,7 @@ async function prompt_chatGPT(client, prompts) {
 
     const timestamp = new Date().getTime()
     const model_technique = "few-shot-prompting"
-    const file_name = `${model_technique}_${timestamp}.feature`  
+    const file_name = `${model_technique}-${timestamp}.feature`  
     const directory_name = './features/'
 
     let query = ''

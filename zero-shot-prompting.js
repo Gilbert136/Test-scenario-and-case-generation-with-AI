@@ -7,7 +7,7 @@ async function prompt_chatGPT(client, prompts) {
 
     const timestamp = new Date().getTime()
     const model_technique = "zero-shot-prompting"
-    const file_name = `${model_technique}_${timestamp}.feature`  
+    const file_name = `${model_technique}-${timestamp}.feature`  
     const directory_name = './features/'
 
     let query = ''

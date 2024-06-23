@@ -1,5 +1,6 @@
 import OpenAI from "openai";
-import { writeFile, existsSync, mkdirSync } from 'fs';
+import { writeFile, existsSync, mkdirSync, createReadStream, createWriteStream } from 'fs';
+import jsonl from 'jsonl';
 import prompts from 'prompts'
 
 //import promptSync from 'prompt-sync';
@@ -26,11 +27,17 @@ export function save_file(directory_name, file_name, content) {
         mkdirSync(directory_name, { recursive: true });
     }
 
-    const path = directory_name + file_name
+    const path = `${directory_name}${file_name}`
     writeFile(path, content, (err) => {
         if (err) throw err;
         console.log(`The file has been saved in the ${directory_name} directory!`);
     });
+}
+
+export function convert_json_jsonL(path){
+    createReadStream(`${path}.json`)
+        .pipe(jsonl())
+        .pipe(createWriteStream(`${path}.jsonl`))
 }
 
 export async function get_query(prompts_query) {
