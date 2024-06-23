@@ -36,7 +36,7 @@ async function prompt_chatGPT(client, prompts) {
         }
 
         let chat_completion = await client.chat.completions.create({ messages:messages, model: model_name })
-        let chat_completion_response = chat_completion.choices[0].message.content.replace("```gherkin", "").replace("```", "")
+        let chat_completion_response = chat_completion.choices[0].message.content.replaceAll("```gherkin", "").replaceAll("```", "")
         if(append_reply){
             reply += chat_completion_response
         }else{

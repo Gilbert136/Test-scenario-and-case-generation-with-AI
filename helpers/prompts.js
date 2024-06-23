@@ -1,12 +1,7 @@
 export const system_prompt_zero_shot = `You are a Quality assurance engineer.`
 
-export const system_prompt_few_shot = 
-`You are a Quality assurance engineer. You are an expect in writing test scenarios with test cases in BDD Gherkin style. 
-You always take into consideration all edge cases and includes both positive and negative scenarios. 
-You always write test scenarios with test cases and include add examples to each. 
-You always follow a set of instructions to create test scenarios with test cases. 
-You always follow the instructions below: 
-1. Always start BDD gherkin syntax with 'Feature:' keyword. 
+export const system_prompt_few_shot_instruction =  
+`1. Always start BDD gherkin syntax with 'Feature:' keyword. 
 2. Use 'Scenario Outline:' and not 'Scenario:'. 
 3. Always include Examples for each Scenario Outline. 
 4. Include steps in the Background if they are repeated at the beginning of all Scenario Outline in a Feature. 
@@ -15,6 +10,22 @@ You always follow the instructions below:
 7. Put summary tags at the line on top of only 'Feature:' and 'Scenario Outline:' and not 'Examples:' to annotate it. 
 8. Use only '@test @dev' to annotate Examples. 
 9. Include comments if possible.`
+
+export const system_prompt_few_shot = 
+`You are a Quality assurance engineer. You are an expect in writing test scenarios with test cases in BDD Gherkin style. 
+You always take into consideration all edge cases and includes both positive and negative scenarios. 
+You always write test scenarios with test cases and include add examples to each. 
+You always follow a set of instructions to create test scenarios with test cases. 
+You always follow the instructions below: 
+${system_prompt_few_shot_instruction}`
+
+export const system_prompt_few_shot_rag = 
+`You are a Quality assurance engineer. You are an expect in writing test scenarios with test cases in BDD Gherkin style. 
+You always take into consideration all edge cases and includes both positive and negative scenarios. 
+You always write test scenarios with test cases and include add examples to each. 
+You always follow a set of instructions to create test scenarios with test cases. 
+You always follow the instructions below: 
+{instructions}`
 
 export const user_goal = `I want to send and withdraw money by adults and non-adults, so that I can be able to make transactions for my business.`
 
@@ -31,12 +42,21 @@ export const prompt_output_reformat = `Reformat with gherkin syntax.`
 export const prompt_context = 
 `User should be an adult. User should be able to withdraw money if adult. User should be able to send money if adult. User should not be able to send more than 20 euros of money if not adult. User should be able to send any amount of money if I am only an adult. `
 
-
 export const user_prompt_few_shot = 
 `${user_goal} ${prompt_action} ${prompt_output} 
 ${prompt_placeholder} 
 ${prompt_context} 
 `
+export const user_prompt_rag = 
+`{goal} ${prompt_action} ${prompt_output} 
+${prompt_placeholder} 
+{criterias}`;
+
+export const retrieval_prompt_rag = 
+`Generate acceptance criteria for this user story: {input} 
+Do not number or bullet the results
+Using the information below as context: 
+{context}.`;
 
 export const assistant_prompt_few_shot = 
 `

@@ -1,0 +1,27 @@
+A user can be registered as Corporate or a Cousehold user. 
+All users should have an account.
+All users should have be adult.
+The user account is used to identify each individual user. 
+A user account should have a Name, UserId, Password. 
+The Name of the user account can be any text of any length to be valid.
+
+User data validator is below:
+The UserId should only be 7-digit numeric characters to be valid.
+The Password of the user account can be any text of any length valid.
+
+A user who is registered in corporate is called a Corporate user.
+A Corporate user can be a private or public company.
+Examples of Corporate user information are below:
+1. Name: Dell, UserId: 0001234, Password: giveme
+2. Name: Martha's kitchen, UserId: 1234567, Password: haveme
+3. Name: Robert's coffee, UserId: 2345678, Password: takeme
+4. Name: H&M, UserId: 2837492, pounchme
+and other similar examples.
+A user who is registered in household is called a Household user.
+A Household user can be a individual entity.
+Examples of Household user information are below:
+1. Name: Jussi, UserId: 0001234, Password: giveme
+2. Name: Marja, UserId: 1234567, Password: haveme
+3. Name: Frank, UserId: 2345678, Password: takeme
+4. Name: Kwasi, UserId: 2837492, Password: pounchme
+and other similar examples.
