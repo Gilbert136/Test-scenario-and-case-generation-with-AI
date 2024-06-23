@@ -1,12 +1,12 @@
-import { system_prompt_few_shot, assistant_prompt_few_shot, user_prompt_few_shot, prompt_action, prompt_output, user_goal, prompt_context, prompt_placeholder, prompt_output_reformat, prompt_output_regenerate } from './helpers/prompts.js'
+import { system_prompt_zero_shot, system_prompt_few_shot, assistant_prompt_few_shot, user_prompt_few_shot, prompt_action, prompt_output, user_goal, prompt_context, prompt_placeholder, prompt_output_reformat, prompt_output_regenerate } from './helpers/prompts.js'
 import { chatGPT_client, save_file, get_query, prompt } from './helpers/methods.js'
-import { model_name, open_api_key } from './helpers/constants.js'
+import { fine_tuned_model_name, open_api_key } from './helpers/constants.js'
 
 async function prompt_chatGPT(client, prompts) {
     const messages = [{"role": "system", "content": prompts[0]["answer"]}]
 
     const timestamp = new Date().getTime()
-    const model_technique = "few-shot-prompting"
+    const model_technique = "fine-tuned-prompting"
     const file_name = `${model_technique}-${timestamp}.feature`  
     const directory_name = './features/'
 
@@ -17,11 +17,10 @@ async function prompt_chatGPT(client, prompts) {
         let append_reply = false 
         if(query.length === 0) { 
             query = await get_query(prompts) 
-            messages.push({"role": "user", "content": user_prompt_few_shot})
-            messages.push({"role":"assistant","content": assistant_prompt_few_shot})
+            //messages.push({"role": "user", "content": user_prompt_few_shot})
+            //messages.push({"role":"assistant","content": assistant_prompt_few_shot})
             messages.push({"role": "user", "content": query})
             console.log(`${query}`)
-
         } 
         else {
             query = await prompt(`Add more information or press enter to keep generating or press R to regenerate or Press r to reformat? `)
@@ -38,7 +37,7 @@ async function prompt_chatGPT(client, prompts) {
             messages.push({"role": "user", "content": query })
         }
 
-        let chat_completion = await client.chat.completions.create({ messages:messages, model: model_name })
+        let chat_completion = await client.chat.completions.create({ messages:messages, model: fine_tuned_model_name })
         let chat_completion_response = chat_completion.choices[0].message.content.replace("```gherkin", "").replace("```", "")
         if(append_reply){
             reply += chat_completion_response
@@ -66,7 +65,7 @@ async function main() {
         console.log("You can find your API key at https://platform.openai.com/api-keys ")
     } else {
         const prompts = [
-            { "name" : "Persona",       "question": "[Persona] Enter persona: ",  "answer": "", ask: true, default: system_prompt_few_shot },
+            { "name" : "Persona",       "question": "[Persona] Enter persona: ",  "answer": "", ask: true, default: system_prompt_zero_shot },
             { "name" : "Goal",          "question": "[Goal] Enter goal: ",        "answer": "",    ask: true, default: user_goal },
             { "name" : "Action",        "question": "[Action] Enter action: ",    "answer": "",  ask: false, default: prompt_action },
             { "name" : "Output",        "question": "[Output] Enter output: ",    "answer": "",  ask: false, default: prompt_output },

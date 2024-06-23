@@ -45,7 +45,12 @@ export async function get_query(prompts_query) {
     
     prompts_query.forEach(x => {
         if(x.ask) x.answer = prompted_results[x.name]
-        if(x.answer.trim().length === 0)  x.answer = x.default.trim()+" "
+        if(x.answer.trim().length === 0)  {
+            if(x.name == 'Context') { 
+                x.answer = prompts_query[1].answer == prompts_query[1].default ? x.default.trim()+" " : ''
+            }
+            else x.answer = x.default.trim()+" "
+        }
     })
     return prompts_query.splice(1).reduce((full, first) => {
         return full+(first.answer.trim()+". ")}, "")

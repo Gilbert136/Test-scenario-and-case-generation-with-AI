@@ -18,7 +18,7 @@ async function prompt_chatGPT(client, prompts) {
         if(query.length === 0) { 
             query = await get_query(prompts) 
             messages.push({"role": "user", "content": query})
-            console.log(query)
+            console.log(`${query}`)
         } 
         else {
             query = await prompt(`Add more information or press enter to keep generating or press R to regenerate or Press r to reformat? `)
