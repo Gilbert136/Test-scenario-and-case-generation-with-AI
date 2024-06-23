@@ -1,6 +1,6 @@
 import { system_prompt_zero_shot, prompt_action, prompt_output, user_goal, prompt_context, prompt_placeholder, prompt_output_reformat, prompt_output_regenerate } from './helpers/prompts.js'
 import { chatGPT_client, save_file, get_query, prompt } from './helpers/methods.js'
-import { model_name } from './helpers/constants.js'
+import { model_name, open_api_key } from './helpers/constants.js'
 
 async function prompt_chatGPT(client, prompts) {
     const messages = [{"role": "system", "content": prompts[0]["answer"]}]
@@ -21,7 +21,7 @@ async function prompt_chatGPT(client, prompts) {
             console.log(query)
         } 
         else {
-            query = prompt(`Add more information or press enter to keep generating or press R to regenerate or Press r to reformat? `)
+            query = await prompt(`Add more information or press enter to keep generating or press R to regenerate or Press r to reformat? `)
             if(query.trim().length === 0){
                 query = `continue and add more scenarios`
                 append_reply = true
@@ -44,7 +44,7 @@ async function prompt_chatGPT(client, prompts) {
         }
         console.log(reply)
 
-        keep_generation = prompt("Do you want to continue generating or reformat Y/N. Any response other than Y will close the application? ")
+        keep_generation = await prompt("Do you want to continue generating or reformat Y/N. Any response other than Y will close the application? ")
         if(keep_generation.toUpperCase() == 'Y') {
             messages.push({"role": "assistant", "content": reply})
         } else {
@@ -57,8 +57,8 @@ async function prompt_chatGPT(client, prompts) {
 }
 
 async function main() {
-    const api_key = prompt.hide("Insert openai api key: ")
-    const client = await chatGPT_client(api_key.trim().length == 0 ? 'sk-proj-OseJ7qGsiNk7IV9OIxIET3BlbkFJVGZ6NtHNRiFBgGFOoOkC' : api_key)
+    const api_key = await prompt("Insert openai api key: ")
+    const client = await chatGPT_client(api_key.trim().length == 0 ? open_api_key : api_key)
     if (client == null) {
         console.log("You can find your API key at https://platform.openai.com/api-keys ")
     } else {

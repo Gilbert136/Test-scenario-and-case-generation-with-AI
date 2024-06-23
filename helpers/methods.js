@@ -2,10 +2,9 @@ import OpenAI from "openai";
 import { writeFile, existsSync, mkdirSync } from 'fs';
 import prompts from 'prompts'
 
-import promptSync from 'prompt-sync';
-import psp from 'prompt-sync-plus';
-
-export const prompt = promptSync({sigint: true});
+//import promptSync from 'prompt-sync';
+//import psp from 'prompt-sync-plus';
+//export const prompt = promptSync({sigint: true});
 
 async function check_chatGPT_api_key_validity(client) {
     try {
@@ -34,17 +33,19 @@ export function save_file(directory_name, file_name, content) {
     });
 }
 
-export async function get_query(prompts) {
-    prompts.forEach(x => {
-        if(x.ask) x.answer = prompt(x.question)
+export async function get_query(prompts_query) {
+    let prompted_results = await prompt_multi(prompts_query);
+    
+    prompts_query.forEach(x => {
+        if(x.ask) x.answer = prompted_results[x.name]
         if(x.answer.trim().length === 0)  x.answer = x.default.trim()+" "
-    });
-    return prompts.splice(1).reduce((full, first) => {
+    })
+    return prompts_query.splice(1).reduce((full, first) => {
         return full+(first.answer.trim()+". ")}, "")
-            .replaceAll("..", ".").replaceAll(" .", "")
+            .replaceAll("..", ".").replaceAll(" .", "").replaceAll(":.", ":")
 }
 
-export async function prompt(message, name) {
+export async function prompt(message, name="") {
     const response = await prompts({
         type: 'text',
         name: name,
@@ -53,13 +54,17 @@ export async function prompt(message, name) {
     return response[name]
 }
 
-
-(async () => {
-    const response = await prompts({
-      type: 'text',
-      name: 'meaning',
-      message: 'What is the meaning of life?'
-    });
-  
-    console.log(response.meaning);
-  })();
+export async function prompt_multi(prompts_query) {
+    let results = []
+    prompts_query.forEach(x => {
+        if(x.ask) {
+            let reformated_result = {
+                type: 'text',
+                name: x.name,
+                message: x.question
+            }
+            results.push(reformated_result)
+        }
+    })
+    return await prompts(results);
+}
