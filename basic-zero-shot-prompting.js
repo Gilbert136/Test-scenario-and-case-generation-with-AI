@@ -1,17 +1,10 @@
 import OpenAI from "openai";
-import promptSync from 'prompt-sync';
 import { writeFile, existsSync, mkdirSync } from 'fs';
+import { system_prompt_zero_shot, prompt_action, prompt_output, user_goal, prompt_output_reformat, prompt_output_regenerate } from './helpers/prompts.js'
+import { prompt, get_query } from './helpers/methods.js'
+import { model_name, open_api_key } from './helpers/constants.js'
 
-const prompt = promptSync({sigint: true});
-const model_name = "chat_gpt_35"
 const timestamp = new Date().getTime()
-
-function get_query(prompts) {
-    prompts.forEach(x => {
-        x.answer = prompt(x.question);
-    });
-    return prompts.reduce((full, first) => { return full+first.answer.trim()+". "}, "")
-}
 
 async function check_chatGPT_api_key_validity(client) {
     try {
@@ -24,19 +17,18 @@ async function check_chatGPT_api_key_validity(client) {
 }
 
 async function chatGPT_client() {
-    const api_key = prompt.hide("Insert openai api key: ")
+    let api_key = await prompt("Insert openai api key: ")
+    api_key = api_key.trim().length == 0 ? open_api_key : api_key
     const client = new OpenAI({ apiKey: api_key });
     return await check_chatGPT_api_key_validity(client) ? client : null
 }
 
 async function prompt_chatGPT(client, prompts) {
-    const query = get_query(prompts)
+    const query = await get_query(prompts)
     const chat_completion = await client.chat.completions.create({
         messages: [
             {"role": "system", "content": prompts[0]["answer"]},
             {"role": "user", "content": query},
-            //{"role":"assistant","content": few_shot_assistant_prompt},
-            //{"role": "user", "content": user_message},
         ],
         model: "gpt-3.5-turbo",
       });
@@ -65,11 +57,10 @@ async function main() {
         console.log("You can find your API key at https://platform.openai.com/api-keys ")
     } else {
         const prompts = [
-            { "name" : "Persona",   "question": "[Persona] Enter persona: ",                     "answer": "" },
-            { "name" : "Goal",      "question": "[Goal] Enter the your goal: ",                    "answer": "" },
-            { "name" : "Context",   "question": "[Context] Insert context:  ",                        "answer": "" },
-            { "name" : "Action",    "question": "[Action] What action do you want to perform: ",     "answer": "" },
-            { "name" : "Output",    "question": "[Output] What output do you want the results: ",    "answer": "" }
+            { "name" : "Persona",       "question": "[Persona] Enter persona: ",                     "answer": "",      ask: true, default: system_prompt_zero_shot },
+            { "name" : "Goal",          "question": "[Goal] Enter the your goal: ",                    "answer": "",    ask: true, default: user_goal },
+            { "name" : "Action",        "question": "[Action] What action do you want to perform: ",     "answer": "",  ask: true, default: prompt_action },
+            { "name" : "Output",        "question": "[Output] What output do you want the results: ",    "answer": "",  ask: true, default: prompt_output }
         ]
         prompt_chatGPT(client, prompts)
     }

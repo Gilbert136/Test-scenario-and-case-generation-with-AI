@@ -1,4 +1,4 @@
-import { system_prompt_zero_shot, prompt_action, prompt_output, user_goal, prompt_context, prompt_placeholder, prompt_output_reformat, prompt_output_regenerate } from './helpers/prompts.js'
+import { system_prompt_zero_shot, prompt_action, prompt_output, user_goal, prompt_output_reformat, prompt_output_regenerate } from './helpers/prompts.js'
 import { chatGPT_client, save_file, get_query, prompt } from './helpers/methods.js'
 import { model_name, open_api_key } from './helpers/constants.js'
 

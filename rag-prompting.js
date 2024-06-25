@@ -7,6 +7,7 @@ import { ChatPromptTemplate, SystemMessagePromptTemplate, AIMessagePromptTemplat
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { system_prompt_zero_shot, system_prompt_few_shot, system_prompt_few_shot_rag, user_prompt_rag, retrieval_prompt_rag, system_prompt_few_shot_instruction, assistant_prompt_few_shot, user_prompt_few_shot, prompt_action, prompt_output, user_goal, prompt_context, prompt_placeholder, prompt_output_reformat, prompt_output_regenerate } from './helpers/prompts.js'
 import { model_name, open_api_key } from './helpers/constants.js'
+import { prompt } from './helpers/methods.js'
 
 
 async function working() {
@@ -45,7 +46,7 @@ async function store_index(){
     await vectorstore.save("./index");
 }
 
-async function search_for_relevant_criterias(question) {
+async function search_for_relevant_context(question) {
     await store_index()
 
     const embeddings = new OpenAIEmbeddings({ apiKey: open_api_key, batchSize: 512, model: "text-embedding-3-large" });
@@ -70,20 +71,18 @@ async function formulate_prompt_query(question) {
     const formattedChatPrompt = await chatPrompt.invoke({
         instructions: system_prompt_few_shot_instruction,
         goal: question,
-        criterias: await search_for_relevant_criterias(question)
+        criterias: await search_for_relevant_context(question)
     });
     return formattedChatPrompt
 }
 
 async function generate_result() {
-    const question = "I want to login to my bank account, so that I can be able to check my bank account balance."
+    let question = await prompt("[User story] Insert user story? ")
+    question = question.trim().length === 0 ? "I want to login to my bank account, so that I can be able to check my bank account balance." : question
     const model = new ChatOpenAI({ model: model_name, temperature: 0, apiKey: open_api_key });
-    const prompt = await formulate_prompt_query(question)
-    const result = await model.invoke(prompt);
+    const prompt_result = await formulate_prompt_query(question)
+    const result = await model.invoke(prompt_result);
     console.log(result.content)
 } 
 
 await generate_result()
-
-//const question = "I want to login to my bank account, so that I can be able to check my bank account balance."
-//await formulate_prompt_query(question)
