@@ -14,6 +14,7 @@
   "dependencies": {
     "@langchain/community": "^0.2.13",
     "faiss-node": "^0.5.1",
+    "gherkin-lint": "^4.2.4",
     "jsonl": "^1.1.2",
     "langchain": "^0.2.6",
     "openai": "^4.47.3",
