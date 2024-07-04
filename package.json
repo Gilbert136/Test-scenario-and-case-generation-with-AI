@@ -5,6 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "basic-zero-shot-prompting": "node basic-zero-shot-promptin.js",
+    "zero-shot-prompting": "node zero-shot-promptin.js",
+    "few-shot-prompting": "node few-shot-promptin.js",
+    "few-shot-prompting-with-fine-tuned": "node fine-tuned-promptin.js",
+    "few-shot-prompting-with-rag": "node rag-prompting.js",
     "gherkin-lint": "gherkin-lint -c .gherkin-lintrc features",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

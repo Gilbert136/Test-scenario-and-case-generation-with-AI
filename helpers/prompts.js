@@ -147,7 +147,7 @@ export const prompt_criterias = [
   I should  view bank balance if the user is login and have permission to view account balance. 
   I should not view account balance if they are login and do not have permission to view account balance.`,
 
-  `I want to be able to create an accunt, so that I can create my own profile. ${prompt_action} ${prompt_output}
+  `I want to be able to create an account, so that I can create my own profile. ${prompt_action} ${prompt_output}
   ${prompt_placeholder} 
   I should be able to create an account if I do not have an exist account.
   I should be able to create a profile if I have an account
