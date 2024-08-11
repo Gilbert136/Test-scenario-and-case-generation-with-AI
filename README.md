@@ -30,3 +30,8 @@ Before starting, make sure you have the following software installed on your sys
    npm run few-shot-prompting-with-rag
 3. **Validate the results**: After running the project, you can validate the response for check for linting errors:
    npm run gherkin-lint
+
+## Screenshots of the application
+![Screenshot 2024-06-25 224942](https://github.com/user-attachments/assets/c995ca08-f361-4cb2-9176-69f8c2feb29e)
+![rag implementation](https://github.com/user-attachments/assets/870a94e3-b267-4ef9-8bb3-da14c2d416f7)
+
